@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import User from '../schemas/User'
 
-class UserController {
+export default class UserController {
   public async allUsers (req: Request, res: Response): Promise<Response> {
     const users = await User.find()
 
@@ -12,6 +12,7 @@ class UserController {
     const id = await User.find()
     req.body._id = id.length < 1 ? 1 : id.length
     const user = await User.create(req.body)
+
     return res.json(user)
   }
 
@@ -22,6 +23,14 @@ class UserController {
 
     return res.json(user)
   }
-}
 
-export default new UserController()
+  public async update (req: Request, res: Response): Promise<Response> {
+    const params = req.params
+    const user = await User.updateMany({ ...params }, { $set: {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email
+    } })
+    return res.json(user)
+  }
+}

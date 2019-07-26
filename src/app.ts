@@ -23,10 +23,11 @@ class App {
       mongoose.connect('mongodb://localhost:27017/tsnode', {
         useNewUrlParser: true // Aceitando novo formato de URL
       })
+      mongoose.set('useCreateIndex', true)
     }
 
     private routes (): void {
-      this.express.use(routes)
+      this.express.use(routes) // Utilizando as rotas
     }
 }
 
