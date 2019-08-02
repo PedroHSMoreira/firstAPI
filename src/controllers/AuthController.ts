@@ -28,7 +28,7 @@ export default class AuthController {
 
       const user = await User.create(req.body) // Criar o usuário no bd
 
-      user.password = undefined
+      user['password'] = undefined // Para não retornar a senha
 
       return res.send({ user, token: generateToken({ id: user._id }) })
     } catch (error) {
@@ -45,9 +45,9 @@ export default class AuthController {
     if (!user) return res.status(400).send({ error: 'User not found' })
 
     // Comparando a senha
-    if (!await bcrypt.compare(password, user.password)) return res.status(400).send({ error: 'Invalid password' })
+    if (!await bcrypt.compare(password, user['password'])) return res.status(400).send({ error: 'Invalid password' })
 
-    user.password = undefined
+    user['password'] = undefined
 
     res.send({ user, token: generateToken({ id: user._id }) })
   }

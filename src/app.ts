@@ -20,7 +20,7 @@ class App {
     }
 
     private database (): void {
-      mongoose.connect('mongodb://localhost:27017/tsnode', {
+      mongoose.connect('mongodb://localhost:32768/tsnode', {
         useNewUrlParser: true // Aceitando novo formato de URL
       })
       mongoose.set('useCreateIndex', true)
